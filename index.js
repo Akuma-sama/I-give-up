@@ -10,4 +10,4 @@ axios.get("https://www.amazon.com/Black-Clover-Vol-27/dp/1974725146/ref=sr_1_1?k
         const price = $('#price').text();
         console.log(title);
         console.log(price);
-    });
+    });                                               
