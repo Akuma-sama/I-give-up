@@ -1,0 +1,26 @@
+{
+  "name": "unofficial-evike-api",
+  "version": "1.0.0",
+  "description": "Scrapes Evike.com for data.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akuma-sama/Unofficial-Evike-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akuma-sama/Unofficial-Evike-API/issues"
+  },
+  "homepage": "https://github.com/Akuma-sama/Unofficial-Evike-API#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.14"
+  }
+}
