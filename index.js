@@ -22,7 +22,7 @@ app.get('/', async (req, res) => {
                     url: url
                 });
             });
-            res.json(json);
+            res.json(json)
         }).catch((err) => console.log(err));
 });
 
