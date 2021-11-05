@@ -1,29 +1,13 @@
-const PORT = 8000;
-const express = require('express');
 const axios = require("axios");
-const cheerio = require("cheerio");
+const cheerio = require("cheerio")
 
-const app = express();
-
-app.get('/', async (req, res) => {
-
-    axios.get("https://myanimelist.net/topanime.php")
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const json = [];
-
-            $('//*[@id="#area5114"]', html).each(function () {
-                const title = $(this).text();
-                const url = $(this).attr('href');
-
-                json.push({
-                    title: title,
-                    url: url
-                });
-            });
-            res.json(json)
-        }).catch((err) => console.log(err));
-});
-
-app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
+axios.get("https://www.amazon.com/Black-Clover-Vol-27/dp/1974725146/ref=sr_1_1?keywords=black+clover+manga&qid=1636150410&sr=8-1")
+    .then( response => {
+        const html = response.data;
+        // console.log(html);
+        const $ = cheerio.load(html);
+        const title = $('.a-size-extra-large').text();
+        const price = $('#price').text();
+        console.log(title);
+        console.log(price);
+    });
