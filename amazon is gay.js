@@ -9,7 +9,7 @@ const links = [
     'https://www.amazon.com/Gskyer-Telescope-AZ-Astronomical-Refracting/dp/B081RJ8DW1/ref=zg-bs_photo_2/135-7110043-2348340?pd_rd_w=8OxBq&pf_rd_p=1e7b1982-fb44-47aa-b1ce-d356a8609d66&pf_rd_r=TGVJSHM1KXTYR8SGM9E5&pd_rd_r=8c09ae9c-3590-4e9d-8e6b-7c88ca091585&pd_rd_wg=OtYU0&pd_rd_i=B081RJ8DW1&psc=1'
 ]
 
-// for(let i=0; i<links.length; i++) {
+for(let i=0; i<links.length; i++) {
     axios.get(links[1])
         .then( response => {
             const html = response.data;
@@ -33,4 +33,4 @@ const links = [
             // })
             // console.log(linkData)
         }).catch(error => console.log(error));
-// }
+}
