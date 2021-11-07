@@ -137,7 +137,7 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
     }).catch(error => console.log(error));
 });
 
-//#region Genre refuses to work
+//#region Genre refuses to work Gives the same info at a constant. I may have to use https://graphql.anilist.co/ but I am too lazy right now.
 
 // app.get('/genre/anime/:genreId?', async (req, res) => {
 //     let genre = req.params.genreId;
