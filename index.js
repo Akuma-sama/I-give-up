@@ -5,6 +5,7 @@ const cheerio = require("cheerio");
 
 const app = express();
 
+// This is just basic info. When I complete the endpoints, I will make an html/css file for this.
 app.get('/', async (req, res) => {
     const start = [
         'Hello, this is an attempted anilist api. More coming soon',
@@ -44,6 +45,8 @@ app.get('/', async (req, res) => {
     ];
     res.json(start);
 });
+
+// Maybe I can access https://graphql.anilist.co/ and only require the series name instead of the id. Being attempted in ./anilistGraphql test
 
 app.get('/anime/:anilistId/:name?', async (req, res) => {
     const anilistId = req.params.anilistId;
@@ -137,7 +140,7 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
     }).catch(error => console.log(error));
 });
 
-//#region Genre refuses to work Gives the same info at a constant. I may have to use https://graphql.anilist.co/ but I am too lazy right now.
+// #region Genre refuses to work Gives the same info at a constant. Genre may have to be tossed.
 
 // app.get('/genre/anime/:genreId?', async (req, res) => {
 //     let genre = req.params.genreId;
@@ -191,6 +194,6 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
 //         });
 // });
 
-//#endregion
+// #endregion
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
