@@ -2,7 +2,6 @@ const PORT = 8000;
 const express = require('express');
 const axios = require("axios");
 const cheerio = require("cheerio");
-
 const app = express();
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
@@ -42,7 +41,6 @@ app.get('/anime/:anilistId/:name?', async (req, res) => {
     };
     const BASE = "https://anilist.co/anime"
     const url = `${BASE}/${anilistId}${fSlash}${name}`
-    // console.log(url);
 
     axios.get(url)
         .then(response => {
@@ -55,7 +53,6 @@ app.get('/anime/:anilistId/:name?', async (req, res) => {
             $('.data-set', html).each(function () {
                 const type = $(this).children('.type').text();
                 const value = $(this).children('.value').text();
-
                 linkData.push({
                     type: type,
                     value: value
@@ -90,7 +87,6 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
     };
     const BASE = "https://anilist.co/manga"
     const url = `${BASE}/${anilistId}${fSlash}${name}`
-    // console.log(url);
 
     axios.get(url)
         .then(response => {
@@ -103,7 +99,6 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
             $('.data-set', html).each(function () {
                 const type = $(this).children('.type').text();
                 const value = $(this).children('.value').text();
-
                 linkData.push({
                     type: type,
                     value: value
