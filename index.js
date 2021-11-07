@@ -143,16 +143,16 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
 //     let genre = req.params.genreId;
 //     genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
 
-//     const BASE = "https://anilist.co/search/anime?genres="
-//     const url = `${BASE}${genre}`
-//     console.log(url)
+//     const BASE = "https://anilist.co/search/anime?genres=";
+//     const url = `${BASE}${genre}`;
+//     console.log(url);
 
 //     axios.get(url)
 //         .then(response => {
 //             const html = response.data;
 //             const $ = cheerio.load(html);
-//             const BASE = 'https://anilist.co'
-//             const links = []
+//             const BASE = 'https://anilist.co';
+//             const links = [];
 
 //             $('.media-card').each(function () {
 //                 const newURL = $(this).children('.cover').attr('href');
@@ -161,7 +161,7 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
 //                 links.push({
 //                     URL: `${BASE}${newURL}`
 //                 });
-//             })
+//             });
 //             res.json(links);
 //         });
 // });
@@ -170,23 +170,23 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
 //     let genre = req.params.genreId;
 //     genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
 
-//     const BASE = "https://anilist.co/search/manga?genres="
-//     const url = `${BASE}${genre}`
+//     const BASE = "https://anilist.co/search/manga?genres=";
+//     const url = `${BASE}${genre}`;
 
 //     axios.get(url)
 //         .then(response => {
 //             const html = response.data;
 //             const $ = cheerio.load(html);
-//             const BASE = 'https://anilist.co'
-//             const links = []
+//             const BASE = 'https://anilist.co';
+//             const links = [];
 
 //             $('.media-card').each(function () {
 //                 const newURL = $(this).children('.cover').attr('href');
 
 //                 links.push({
 //                     URL: `${BASE}${newURL}`
-//                 })
-//             })
+//                 });
+//             });
 //         res.json(links);
 //         });
 // });
