@@ -25,22 +25,22 @@ app.get('/', async (req, res) => {
                 '/manga/105097'
             ]
         },
-        {
-            '/genre/anime/:genre': 'input a genre and get a random site, you can do the data requests with the previous endpoints',
-            'example': [
-                '/genre/anime/horror',
-                '/genre/anime/mystery',
-                '/genre/anime/comedy'
-            ]
-        },
-        {
-            '/genre/manga/:genre': 'input a genre and get a random site, you can do the data requests with the previous endpoints',
-            'example': [
-                '/genre/manga/horror',
-                '/genre/manga/mystery',
-                '/genre/manga/comedy'
-            ]
-        }
+        // {
+        //     '/genre/anime/:genre': 'input a genre and get a random site, you can do the data requests with the previous endpoints',
+        //     'example': [
+        //         '/genre/anime/horror',
+        //         '/genre/anime/mystery',
+        //         '/genre/anime/comedy'
+        //     ]
+        // },
+        // {
+        //     '/genre/manga/:genre': 'input a genre and get a random site, you can do the data requests with the previous endpoints',
+        //     'example': [
+        //         '/genre/manga/horror',
+        //         '/genre/manga/mystery',
+        //         '/genre/manga/comedy'
+        //     ]
+        // }
     ];
     res.json(start);
 });
@@ -137,54 +137,60 @@ app.get('/manga/:anilistId/:name?', async (req, res) => {
     }).catch(error => console.log(error));
 });
 
-app.get('/genre/anime/:genreId', async (req, res) => {
-    let genre = req.params.genreId;
-    genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
+//#region Genre refuses to work
 
-    const BASE = "https://anilist.co/search/anime?genres="
-    const url = `${BASE}${genre}`
+// app.get('/genre/anime/:genreId?', async (req, res) => {
+//     let genre = req.params.genreId;
+//     genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
 
-    axios.get(url)
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const BASE = 'https://anilist.co'
-            const links = []
+//     const BASE = "https://anilist.co/search/anime?genres="
+//     const url = `${BASE}${genre}`
+//     console.log(url)
 
-            $('.media-card').each(function () {
-                const newURL = $(this).children('.title').attr('href');
+//     axios.get(url)
+//         .then(response => {
+//             const html = response.data;
+//             const $ = cheerio.load(html);
+//             const BASE = 'https://anilist.co'
+//             const links = []
 
-                links.push({
-                    URL: `${BASE}${newURL}`
-                })
-            })
-            res.json(links);
-        });
-});
+//             $('.media-card').each(function () {
+//                 const newURL = $(this).children('.cover').attr('href');
 
-app.get('/genre/manga/:genreId', async (req, res) => {
-    let genre = req.params.genreId;
-    genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
+//                 // console.log(newURL);
+//                 links.push({
+//                     URL: `${BASE}${newURL}`
+//                 });
+//             })
+//             res.json(links);
+//         });
+// });
 
-    const BASE = "https://anilist.co/search/manga?genres="
-    const url = `${BASE}${genre}`
+// app.get('/genre/manga/:genreId', async (req, res) => {
+//     let genre = req.params.genreId;
+//     genre = genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
 
-    axios.get(url)
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const BASE = 'https://anilist.co'
-            const links = []
+//     const BASE = "https://anilist.co/search/manga?genres="
+//     const url = `${BASE}${genre}`
 
-            $('.media-card').each(function () {
-                const newURL = $(this).children('.cover').attr('href');
+//     axios.get(url)
+//         .then(response => {
+//             const html = response.data;
+//             const $ = cheerio.load(html);
+//             const BASE = 'https://anilist.co'
+//             const links = []
 
-                links.push({
-                    URL: `${BASE}${newURL}`
-                })
-            })
-        res.json(links);
-        });
-});
+//             $('.media-card').each(function () {
+//                 const newURL = $(this).children('.cover').attr('href');
+
+//                 links.push({
+//                     URL: `${BASE}${newURL}`
+//                 })
+//             })
+//         res.json(links);
+//         });
+// });
+
+//#endregion
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
