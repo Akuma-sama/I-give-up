@@ -11,20 +11,19 @@ app.get('/', async (req, res) => {
     const start = [
         'Hello, this is an attempted anilist api. More coming soon',
         'Documentation',
+        'If there is any faults in the data, it is an anilist error.',
         {
-            '/anime/:anilistId': 'input the id and name or just the id to receive data',
+            '/anime/:anilistName': 'input the id and name or just the id to receive data',
             'example': [
-                '/anime/133965/Komisan-wa-Komyushou-desu/',
-                '/anime/131573/Jujutsu-Kaisen-0/',
-                '/anime/9253'
+                '/anime/Komisan-wa-Komyushou-desu',
+                '/anime/Jujutsu-Kaisen-0',
             ]
         },
         {
-            '/manga/:anilistId': 'input the id and name or just the id to receive data',
+            '/manga/:anilistName': 'input the id and name or just the id to receive data',
             'example': [
-                '/manga/101517/Jujutsu-Kaisen/',
-                '/manga/87216/Kimetsu-no-Yaiba/',
-                '/manga/105097'
+            '/manga/Jujutsu-Kaisen',
+            '/manga/Kimetsu-no-Yaiba'
             ]
         }
     ];
@@ -40,7 +39,7 @@ app.get('/:type/:name', async (req, res) => {
     const type = req.params.type;
     let anilistId;
 
-    const variables = {  // variables for query
+    const variables = { // variables for query
         'search': name,
         'type': type.toUpperCase()
     }
@@ -58,7 +57,8 @@ app.get('/:type/:name', async (req, res) => {
             })
         };
 
-    fetch(url, options).then(handleResponse)
+    fetch(url, options)
+        .then(handleResponse)
         .then(handleData)
         .catch(handleError);
 
@@ -117,6 +117,5 @@ app.get('/:type/:name', async (req, res) => {
             }).catch(error => console.log(error));
     });
 });
-
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
