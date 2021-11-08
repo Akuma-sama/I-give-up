@@ -13,20 +13,27 @@ links = [
         .then( response => {
             const html = response.data;
             const $ = cheerio.load(html);
-            let linkData = [{data: links[0]}];
+            let linkData = [
+                {URL: links[0]},
+            ];
 
+            let obj = [];
             $('.data-set', html).each(function () {
                 const type = $(this).children('.type').text();
                 const value = $(this).children('.value').text();
-                let i=0
-                i++
-                linkData.push({
-                    i: {
+
+                obj.push(
+                    {
                         type: type,
                         value: value
                     }
-                });
+                );
             });
+            const lData = {
+                URL: links[0],
+                'data-set': obj,
+            }
+            console.log(lData);
 
 //             $('.tags', html).each(function () {
 //                 const tagNames = $(this).children('.tag').children('.name').text();
@@ -41,8 +48,6 @@ links = [
 //                 coverURL,
 //                 description
 //             });
-
-            console.log(linkData);
 
         }).catch(error => console.log(error));
 // };
