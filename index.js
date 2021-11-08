@@ -2,6 +2,7 @@ const PORT = 8000;
 const express = require('express');
 const axios = require("axios");
 const cheerio = require("cheerio");
+const fetch = require('node-fetch');
 const app = express();
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
@@ -29,98 +30,101 @@ app.get('/', async (req, res) => {
     res.json(start);
 });
 
-// Maybe I can access https://graphql.anilist.co/ and only require the series name instead of the id. Being attempted in ./anilistGraphql test
+const query = `
+query ($search: String, $type: MediaType) {
+    Media(search: $search, type: $type) {
+        id
+        siteUrl
+    }
+}
+`;
 
-app.get('/anime/:anilistId/:name?', async (req, res) => {
-    const anilistId = req.params.anilistId;
-    let name = req.params.name;
-    let fSlash = '/';
-    if (name == undefined) {
-        name = "";
-        fSlash = "";
-    };
-    const BASE = "https://anilist.co/anime"
-    const url = `${BASE}/${anilistId}${fSlash}${name}`
+function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
 
-    axios.get(url)
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const linkData = [{
-                dataFor: url
-            }];
+app.get('/:type/:name', async (req, res) => {
+    const name = req.params.name;
+    const type = req.params.type;
+    let anilistId;
 
-            $('.data-set', html).each(function () {
-                const type = $(this).children('.type').text();
-                const value = $(this).children('.value').text();
-                linkData.push({
-                    type: type,
-                    value: value
+    const variables = {  // variables for query
+        'search': name,
+        'type': type.toUpperCase()
+    }
+
+    const url = 'https://graphql.anilist.co',
+        options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                query: query,
+                variables: variables
+            })
+        };
+
+    fetch(url, options).then(handleResponse)
+        .then(handleData)
+        .catch(handleError);
+
+    //#region handle functions
+    function handleResponse(response) {
+        return response.json().then(function (json) {
+            return response.ok ? json : Promise.reject(json);
+        });
+    }
+
+    function handleData(data) {
+        anilistId = data['data']['Media']['id'];
+    }
+
+    function handleError(error) {
+        console.log(error);
+    }
+    //#endregion
+
+    sleep(500).then(() => {
+        const BASE = `https://anilist.co/${type}`
+        const newUrl = `${BASE}/${anilistId}`
+
+        axios.get(newUrl)
+            .then(response => {
+                const html = response.data;
+                const $ = cheerio.load(html);
+                const linkData = [{
+                    dataFor: url
+                }];
+
+                $('.data-set', html).each(function () {
+                    const type = $(this).children('.type').text();
+                    const value = $(this).children('.value').text();
+                    linkData.push({
+                        type: type,
+                        value: value
+                    });
                 });
-            });
 
-            $('.tags', html).each(function () {
-                const tagNames = $(this).children('.tag').children('.name').text();
-                linkData.push({
-                    tags: tagNames,
+                $('.tags', html).each(function () {
+                    const tagNames = $(this).children('.tag').children('.name').text();
+                    linkData.push({
+                        tags: tagNames,
+                    });
                 });
-            });
 
-            const coverURL = $('.cover').attr('src');
-            const description = $('.description').text();
-            linkData.push({
-                coverURL,
-                description
-            });
-            res.json(linkData)
+                const coverURL = $('.cover').attr('src');
+                const description = $('.description').text();
+                linkData.push({
+                    coverURL,
+                    description
+                });
+                res.json(linkData)
 
-        }).catch(error => console.log(error));
+            }).catch(error => console.log(error));
+    });
 });
 
-app.get('/manga/:anilistId/:name?', async (req, res) => {
-    const anilistId = req.params.anilistId;
-    let name = req.params.name;
-    let fSlash = '/';
-    if (name == undefined) {
-        name = "";
-        fSlash = "";
-    };
-    const BASE = "https://anilist.co/manga"
-    const url = `${BASE}/${anilistId}${fSlash}${name}`
-
-    axios.get(url)
-        .then(response => {
-            const html = response.data;
-            const $ = cheerio.load(html);
-            const linkData = [{
-                dataFor: url
-            }];
-
-            $('.data-set', html).each(function () {
-                const type = $(this).children('.type').text();
-                const value = $(this).children('.value').text();
-                linkData.push({
-                    type: type,
-                    value: value
-                });
-            });
-
-            $('.tags', html).each(function () {
-                const tagNames = $(this).children('.tag').children('.name').text();
-                linkData.push({
-                    tags: tagNames,
-                });
-            });
-
-            const coverURL = $('.cover').attr('src');
-            const description = $('.description').text();
-            linkData.push({
-                coverURL,
-                description
-            });
-            res.json(linkData);
-
-        }).catch(error => console.log(error));
-});
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
