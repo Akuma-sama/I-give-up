@@ -13,41 +13,41 @@ links = [
         .then( response => {
             const html = response.data;
             const $ = cheerio.load(html);
-            let linkData = [
-                {URL: links[0]},
-            ];
 
-            let obj = [];
+            let data_set = [];
             $('.data-set', html).each(function () {
-                const type = $(this).children('.type').text();
-                const value = $(this).children('.value').text();
+                let type = $(this).children('.type').text();
+                type = type.replace(/[\r|\n]+/g, " ");
+                let value = $(this).children('.value').text();
+                value = value.replace(/[\r|\n]+/g, "");
 
-                obj.push(
+                data_set.push(
                     {
                         type: type,
                         value: value
                     }
                 );
             });
-            const lData = {
-                URL: links[0],
-                'data-set': obj,
-            }
-            console.log(lData);
 
-//             $('.tags', html).each(function () {
-//                 const tagNames = $(this).children('.tag').children('.name').text();
-//                 linkData.push({
-//                     tags: tagNames,
-//                 });
-//             });
+            let tags = [];
+            $('.tags', html).each(function () {
+                let tagNames = $(this).children('.tag').children('.name').text();
+                tagNames = tagNames.replace(/[\r|\n]+/g, ", ")
+                tags.push(tagNames);
+            });
 
-//             const coverURL = $('.cover').attr('src');
-//             const description = $('.description').text();
-//             linkData.push({
-//                 coverURL,
-//                 description
-//             });
+            const coverURL = $('.cover').attr('src');
+            let description = $('.description').text();
+            description = description.replace(/[\r|\n]+/g, "");
+
+            const linkData = {
+                'URL': links[0],
+                'cover': coverURL,
+                'data-set': data_set,
+                'tags': tags,
+                'description': description
+            };
+            console.log(linkData);
 
         }).catch(error => console.log(error));
 // };
