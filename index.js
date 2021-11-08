@@ -3,6 +3,7 @@ const express = require('express');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fetch = require('node-fetch');
+const query = require('./query')
 const app = express();
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
@@ -29,15 +30,6 @@ app.get('/', async (req, res) => {
     ];
     res.json(start);
 });
-
-const query = `
-query ($search: String, $type: MediaType) {
-    Media(search: $search, type: $type) {
-        id
-        siteUrl
-    }
-}
-`;
 
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -95,7 +87,7 @@ app.get('/:type/:name', async (req, res) => {
                 const html = response.data;
                 const $ = cheerio.load(html);
                 const linkData = [{
-                    dataFor: url
+                    dataFor: [name, newUrl]
                 }];
 
                 $('.data-set', html).each(function () {
