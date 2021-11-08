@@ -7,28 +7,28 @@ const query = require('./query')
 const app = express();
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
-// app.get('/', async (req, res) => {
-//     const start = [
-//         'Hello, this is an attempted anilist api. More coming soon',
-//         'Documentation',
-//         'If there is any faults in the data, it is an anilist error.',
-//         {
-//             '/anime/:anilistName': 'input the id and name or just the id to receive data',
-//             'example': [
-//                 '/anime/Komisan-wa-Komyushou-desu',
-//                 '/anime/Jujutsu-Kaisen-0',
-//             ]
-//         },
-//         {
-//             '/manga/:anilistName': 'input the id and name or just the id to receive data',
-//             'example': [
-//             '/manga/Jujutsu-Kaisen',
-//             '/manga/Kimetsu-no-Yaiba'
-//             ]
-//         }
-//     ];
-//     res.json(start);
-// });
+app.get('/', async (req, res) => {
+    const start = [
+        'Hello, this is an attempted anilist api. More coming soon',
+        'Documentation',
+        'If there is any faults in the data, it is an anilist error.',
+        {
+            '/anime/:anilistName': 'input the id and name or just the id to receive data',
+            'example': [
+                '/anime/Komisan-wa-Komyushou-desu',
+                '/anime/Jujutsu-Kaisen-0',
+            ]
+        },
+        {
+            '/manga/:anilistName': 'input the id and name or just the id to receive data',
+            'example': [
+            '/manga/Jujutsu-Kaisen',
+            '/manga/Kimetsu-no-Yaiba'
+            ]
+        }
+    ];
+    res.json(start);
+});
 
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
