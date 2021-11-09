@@ -46,10 +46,8 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/:type/:name', limit, async (req, res) => {
-    let name = req.params.name;
-    // name = name.replace(/[-]+/g, " ")
+    const name = req.params.name;
     const type = req.params.type;
-    let anilistId;
 
     const variables = { // variables for query
         'search': name,
@@ -76,26 +74,17 @@ app.get('/:type/:name', limit, async (req, res) => {
 
     //#region handle functions
     function handleResponse(response) {
+        console.log(response)
         return response.json().then(function (json) {
             return response.ok ? json : Promise.reject(json);
         });
     }
 
+    // Moved the entire `axios.get` in the handleData
     function handleData(data) {
-        anilistId = data['data']['Media']['id'];
-    }
-
-    function handleError(error) {
-        console.log(error);
-    }
-    //#endregion
-
-    // I have the sleep there because my `newUrl` would be undefined. `localhost:8000/anime/undefined` and I would get a list of errors. 
-    // I found that if I halted my program, it would allow time for `handleData()` to work and give me the id so the link would be 
-    // `localhost:8000/anime/{anilistId}`
-    sleep(500).then(() => {
         const BASE = `https://anilist.co/${type}`
-        const newUrl = `${BASE}/${anilistId}`
+        const newUrl = `${BASE}/${data['data']['Media']['id']}`
+        console.log(newUrl)
 
         axios.get(newUrl)
             .then(response => {
@@ -144,7 +133,12 @@ app.get('/:type/:name', limit, async (req, res) => {
                 ];
                 res.json(err);
             });
-    });
+    }
+
+    function handleError(error) {
+        console.log(error);
+    }
+    //#endregion
 });
 
 //#region Error handling
