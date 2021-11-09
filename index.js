@@ -30,10 +30,6 @@ app.get('/', async (req, res) => {
     res.json(start);
 });
 
-function sleep(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-}
-
 app.get('/:type/:name', async (req, res) => {
     const name = req.params.name;
     const type = req.params.type;
@@ -122,8 +118,19 @@ app.get('/:type/:name', async (req, res) => {
                 };
                 res.json(linkData)
 
-            }).catch(error => console.log(error));
+            }).catch(error => {
+                const err = [
+                    error.name,
+                    error.message
+                ];
+                res.json(err);
+            });
     });
 });
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
+
+
+function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+};
