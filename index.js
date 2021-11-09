@@ -128,6 +128,22 @@ app.get('/:type/:name', async (req, res) => {
     });
 });
 
+app.use((req, res, next) => {
+    const err = new Error("Not found");
+    err.status = 404;
+    next(err);
+});
+
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send({
+        error: {
+            status: err.status || 500,
+            message: err.message
+        }
+    })
+});
+
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
 
 
