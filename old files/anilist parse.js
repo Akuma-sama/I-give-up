@@ -17,8 +17,8 @@ links = [
             let data_set = [];
             $('.data-set', html).each(function () {
                 let type = $(this).children('.type').text();
-                type = type.replace(/[\r|\n]+/g, " ");
                 let value = $(this).children('.value').text();
+                type = type.replace(/[\r|\n]+/g, " ");
                 value = value.replace(/[\r|\n]+/g, "");
 
                 data_set.push(
@@ -38,7 +38,8 @@ links = [
 
             const coverURL = $('.cover').attr('src');
             let description = $('.description').text();
-            description = description.replace(/[\r|\n]+/g, "");
+            description = description.replace(/[\r|\n|"\\"]+/g, "");
+            description = description.replace(/\)+/g, ") ");
 
             const linkData = {
                 'URL': links[0],
