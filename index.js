@@ -4,7 +4,6 @@ const rateLimit = require('express-rate-limit')
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fetch = require('node-fetch');
-const query = require('./query')
 const app = express();
 
 const limit = rateLimit({
@@ -17,6 +16,15 @@ const limit = rateLimit({
         }
     }
 });
+
+const query = `
+query ($search: String, $type: MediaType) {
+    Media(search: $search, type: $type) {
+        id
+        siteUrl
+    }
+}
+`;
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
 app.get('/', async (req, res) => {
