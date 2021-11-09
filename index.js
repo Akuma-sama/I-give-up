@@ -160,7 +160,3 @@ app.use((err, req, res, next) => {
 //#endregion
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
-
-function sleep(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-};
