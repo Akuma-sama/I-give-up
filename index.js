@@ -1,10 +1,22 @@
 const PORT = process.env.PORT || 8000;
 const express = require('express');
+const rateLimit = require('express-rate-limit')
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fetch = require('node-fetch');
 const query = require('./query')
 const app = express();
+
+const limit = rateLimit({
+    windowMs: 1000 * 60 * 30,
+    max: 100,
+    message: {
+        'Limit Reached': {
+            'time': '30 minutes',
+            'max requests': 100,
+        }
+    }
+});
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
 app.get('/', async (req, res) => {
@@ -30,7 +42,7 @@ app.get('/', async (req, res) => {
     res.json(start);
 });
 
-app.get('/:type/:name', async (req, res) => {
+app.get('/:type/:name', limit, async (req, res) => {
     const name = req.params.name;
     const type = req.params.type;
     let anilistId;
@@ -128,6 +140,7 @@ app.get('/:type/:name', async (req, res) => {
     });
 });
 
+//#region Error handling
 app.use((req, res, next) => {
     const err = new Error("Not found");
     err.status = 404;
@@ -143,9 +156,9 @@ app.use((err, req, res, next) => {
         }
     })
 });
+//#endregion
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
-
 
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
