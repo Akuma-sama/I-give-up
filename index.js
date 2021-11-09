@@ -35,10 +35,10 @@ app.get('/', async (req, res) => {
         {
             '/:type/:anilistName': 'input the id and name or just the id to receive data',
             'example': [
-                '/anime/Komisan-wa-Komyushou-desu',
-                '/anime/Jujutsu-Kaisen-0',
-                '/manga/Jujutsu-Kaisen',
-                '/manga/Kimetsu-no-Yaiba'
+                '/anime/Komisan wa Komyushou desu',
+                '/anime/Jujutsu Kaisen 0',
+                '/manga/Jujutsu Kaisen',
+                '/manga/Kimetsu no Yaiba'
             ]
         },
     ];
@@ -46,7 +46,8 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/:type/:name', limit, async (req, res) => {
-    const name = req.params.name;
+    let name = req.params.name;
+    name = name.replace(/[-]+/g, " ")
     const type = req.params.type;
     let anilistId;
 
