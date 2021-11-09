@@ -47,7 +47,7 @@ app.get('/', async (req, res) => {
 
 app.get('/:type/:name', limit, async (req, res) => {
     let name = req.params.name;
-    name = name.replace(/[-]+/g, " ")
+    // name = name.replace(/[-]+/g, " ")
     const type = req.params.type;
     let anilistId;
 
