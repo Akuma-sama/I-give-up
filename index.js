@@ -1,11 +1,13 @@
 const PORT = process.env.PORT || 8000;
-const express = require('express');
+
 const rateLimit = require('express-rate-limit')
+const express = require('express');
+const app = express();
+
+const fetch = require('node-fetch');
 const axios = require("axios");
 const cheerio = require("cheerio");
-const fetch = require('node-fetch');
 const path = require('path');
-const app = express();
 
 const limit = rateLimit({
     windowMs: 1000 * 60 * 30,
@@ -29,20 +31,20 @@ query ($search: String, $type: MediaType) {
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
 app.get('/', async (req, res) => {
-    const start = [
-        'Hello, this is an attempted anilist api. More coming soon',
-        'Documentation',
-        'If there is any faults in the data, it is an anilist error.',
-        {
-            '/:type/:anilistName': 'input the id and name or just the id to receive data',
-            'example': [
-                '/anime/KomisanwaKomyushoudesu',
-                '/anime/Jujutsu Kaisen 0',
-                '/manga/JujutsuKaisen',
-                '/manga/Kimetsu no Yaiba'
-            ]
-        },
-    ];
+    // const start = [
+    //     'Hello, this is an attempted anilist api. More coming soon',
+    //     'Documentation',
+    //     'If there is any faults in the data, it is an anilist error.',
+    //     {
+    //         '/:type/:anilistName': 'input the id and name or just the id to receive data',
+    //         'example': [
+    //             '/anime/KomisanwaKomyushoudesu',
+    //             '/anime/Jujutsu Kaisen 0',
+    //             '/manga/JujutsuKaisen',
+    //             '/manga/Kimetsu no Yaiba'
+    //         ]
+    //     },
+    // ];
     // res.json(start);
 
     res.sendFile(path.join(__dirname, '/homepage/index.html'));
@@ -55,7 +57,7 @@ app.get('/:type/:name', limit, async (req, res) => {
     const variables = { // variables for query
         'search': name,
         'type': type.toUpperCase()
-    }
+    };
 
     const url = 'https://graphql.anilist.co',
         options = {
@@ -81,13 +83,13 @@ app.get('/:type/:name', limit, async (req, res) => {
         return response.json().then(function (json) {
             return response.ok ? json : Promise.reject(json);
         });
-    }
+    };
 
     // Moved the entire `axios.get` in the handleData
     function handleData(data) {
-        const BASE = `https://anilist.co/${type}`
-        const newUrl = `${BASE}/${data['data']['Media']['id']}`
-        console.log(newUrl)
+        const BASE = `https://anilist.co/${type}`;
+        const newUrl = `${BASE}/${data['data']['Media']['id']}`;
+        // console.log(newUrl);
 
         axios.get(newUrl)
             .then(response => {
@@ -110,8 +112,8 @@ app.get('/:type/:name', limit, async (req, res) => {
                 let tags = [];
                 $('.tags', html).each(function () {
                     let tagNames = $(this).children('.tag').children('.name').text();
-                    tagNames = tagNames.replace(/[\r|\n]+/g, ", ")
-                    tagNames = tagNames.replace(", ", "")
+                    tagNames = tagNames.replace(/[\r|\n]+/g, ", ");
+                    tagNames = tagNames.replace(", ", "");
                     tags.push(tagNames);
                 });
 
@@ -127,7 +129,7 @@ app.get('/:type/:name', limit, async (req, res) => {
                     'tags': tags,
                     'description': description,
                 };
-                res.json(linkData)
+                res.json(linkData);
 
             }).catch(error => {
                 const err = [
@@ -136,11 +138,11 @@ app.get('/:type/:name', limit, async (req, res) => {
                 ];
                 res.json(err);
             });
-    }
+    };
 
     function handleError(error) {
         console.log(error);
-    }
+    };
     //#endregion
 });
 
@@ -158,7 +160,7 @@ app.use((err, req, res, next) => {
             status: err.status || 500,
             message: err.message
         }
-    })
+    });
 });
 //#endregion
 
