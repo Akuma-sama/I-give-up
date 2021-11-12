@@ -4,6 +4,7 @@ const rateLimit = require('express-rate-limit')
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fetch = require('node-fetch');
+const path = require('path');
 const app = express();
 
 const limit = rateLimit({
@@ -42,9 +43,9 @@ app.get('/', async (req, res) => {
             ]
         },
     ];
-    res.json(start);
+    // res.json(start);
 
-    // res.sendFile('./docs/index.html');
+    res.sendFile(path.join(__dirname, '/homepage/index.html'));
 });
 
 app.get('/:type/:name', limit, async (req, res) => {
