@@ -9,12 +9,60 @@
 </head>
 
 <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
     * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+        cursor: default;
+        background-color: rgb(145, 204, 201);
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 50px 50px;
+        text-transform: uppercase;
+    }
+
+    .content {
         text-align: center;
+        border: 10px solid black;
+        border-radius: 5px;
+        margin: 0 30%;
     }
 </style>
 
 <body>
-    <h1>Hello, Does this work?</h1>
+    <header>
+        <div class="right">Akomi</div>
+        <div class="left">Anilist</div>
+    </header>
+
+    <div class="content">
+        <div class="title">
+            <h2>
+                Unofficial Anilist Parser Rest API
+            </h2>
+        </div>
+        <div class="examples">
+
+        </div>
+        <div class="form">
+            <br>
+            <div class="examples"><pre><code>
+'/:type/:anilistName': 'input the name to receive data'
+
+'/anime/KomisanwaKomyushoudesu'
+'/anime/Jujutsu Kaisen 0'
+'/manga/JujutsuKaisen'
+'/manga/Kimetsu no Yaiba'
+            </code></pre></div>
+        </div>
+    </div>
 </body>
 </html>
