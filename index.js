@@ -44,7 +44,7 @@ app.get('/', async (req, res) => {
     // ];
     // res.json(start);\
     // app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, './docs/index.html'));
+    res.sendFile(path.join('./docs/index.html'));
     // });
 });
 
