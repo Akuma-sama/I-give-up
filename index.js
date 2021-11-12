@@ -35,9 +35,9 @@ app.get('/', async (req, res) => {
         {
             '/:type/:anilistName': 'input the id and name or just the id to receive data',
             'example': [
-                '/anime/Komisan wa Komyushou desu',
+                '/anime/KomisanwaKomyushoudesu',
                 '/anime/Jujutsu Kaisen 0',
-                '/manga/Jujutsu Kaisen',
+                '/manga/JujutsuKaisen',
                 '/manga/Kimetsu no Yaiba'
             ]
         },
