@@ -28,21 +28,24 @@ query ($search: String, $type: MediaType) {
 
 // This is just basic info. When I complete the endpoints, I will make an html/css file for this.
 app.get('/', async (req, res) => {
-    const start = [
-        'Hello, this is an attempted anilist api. More coming soon',
-        'Documentation',
-        'If there is any faults in the data, it is an anilist error.',
-        {
-            '/:type/:anilistName': 'input the id and name or just the id to receive data',
-            'example': [
-                '/anime/KomisanwaKomyushoudesu',
-                '/anime/Jujutsu Kaisen 0',
-                '/manga/JujutsuKaisen',
-                '/manga/Kimetsu no Yaiba'
-            ]
-        },
-    ];
-    res.json(start);
+    // const start = [
+    //     'Hello, this is an attempted anilist api. More coming soon',
+    //     'Documentation',
+    //     'If there is any faults in the data, it is an anilist error.',
+    //     {
+    //         '/:type/:anilistName': 'input the id and name or just the id to receive data',
+    //         'example': [
+    //             '/anime/KomisanwaKomyushoudesu',
+    //             '/anime/Jujutsu Kaisen 0',
+    //             '/manga/JujutsuKaisen',
+    //             '/manga/Kimetsu no Yaiba'
+    //         ]
+    //     },
+    // ];
+    // res.json(start);\
+    // app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, './docs/index.html'));
+    // });
 });
 
 app.get('/:type/:name', limit, async (req, res) => {
