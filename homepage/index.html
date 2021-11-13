@@ -15,7 +15,7 @@
             <div class="headlink"><a href="https://anilist.co/" target="_blank">Anilist</a></div>
         </header>
 
-        <img src="../assets/animeBG.jpg" alt="BG Image">
+        <img src="https://wallpaperaccess.com/full/39033.png" alt="BG Image">
 
         <div class="overlay"></div>
 
@@ -64,6 +64,11 @@ Or you can also fill out the following form for data:
     </section>
 
     <script>
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.setAttribute("style", "top: "+(e.pageY - 10)+"px; left: "+(e.pageX - 10)+"px;")
+        });
+
         function main () {
             const BASE = 'https://unofficial-anilist-parser.herokuapp.com';
             const typeElement = document.getElementById('type');
