@@ -4,65 +4,85 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
     <title>Unofficial Anilist Parser</title>
 </head>
-
-<style>
-
-    @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
-
-    * {
-        margin: 0;
-        padding: 0;
-        font-family: 'Poppins', sans-serif;
-        box-sizing: border-box;
-        cursor: default;
-        background-color: rgb(145, 204, 201);
-    }
-
-    header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 50px 50px;
-        text-transform: uppercase;
-    }
-
-    .content {
-        text-align: center;
-        border: 10px solid black;
-        border-radius: 5px;
-        margin: 0 30%;
-    }
-</style>
-
 <body>
-    <header>
-        <div class="right">Akomi</div>
-        <div class="left">Anilist</div>
-    </header>
+    <div class="cursor"></div>
+    <section class="showcase">
 
-    <div class="content">
-        <div class="title">
-            <h2>
-                Unofficial Anilist Parser Rest API
-            </h2>
-        </div>
-        <div class="examples">
+        <header>
+            <div class="headlink"><a href="https://github.com/Akuma-sama" target="_blank">Akomi</a></div>
+            <div class="headlink"><a href="https://anilist.co/" target="_blank">Anilist</a></div>
+        </header>
 
-        </div>
-        <div class="form">
-            <br>
-            <div class="examples"><pre><code>
-'/:type/:anilistName': 'input the name to receive data'
+        <img src="../assets/animeBG.jpg" alt="BG Image">
 
-'/anime/KomisanwaKomyushoudesu'
-'/anime/Jujutsu Kaisen 0'
-'/manga/JujutsuKaisen'
-'/manga/Kimetsu no Yaiba'
-            </code></pre></div>
+        <div class="overlay"></div>
+
+        <div class="text">
+            <div class="content">
+                <div class="title">
+                    <h2>
+                        Unofficial Anilist Parser Rest API
+                    </h2>
+                </div>
+                <br>
+                <div class="examples"><pre>
+You can type this into the search bar after
+https://unofficial-anilist-parser.herokuapp.com
+
+'/:type/:anilistName' : 'input the name to receive data'
+/anime/The Promised Neverland
+/manga/Kimetsu no Yaiba
+
+Or you can also fill out the following form for data:
+                </pre></div>
+        
+                <div class="form-container">
+                    <div class="form-inputs">
+                        <select name="type" id="type">
+                            <option value="anime">Anime</option>
+                            <option value="manga">Manga</option>
+                        </select>
+                        <br><br><b>
+                        <label for="name">Anime/Manga Name:</label>
+                        </b><br>
+                        <input type="text" id="name" name="name" placeholder="The Promised Neverland">
+                    </div>
+                    <br>
+                    <button onClick="main()">
+                        Generate Link
+                    </button>
+                    <br><br>
+                    <div class="link" id="link">
+        
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+    </section>
+    <script src="main.js"></script>
 </body>
 </html>
+
+</html>
+
+<!-- 
+    <script>
+        function main () {
+            const BASE = 'https://unofficial-anilist-parser.herokuapp.com';
+            const typeElement = document.getElementById('type');
+            const type = typeElement.value;
+            // console.log(type);
+            const nameElement = document.getElementById('name');
+            const name = nameElement.value;
+            // console.log(name);
+            let link = `${BASE}/${type}/${name}`;
+            link = link.replaceAll(" ", "%20");
+            // console.log(link);
+            document.getElementById('link').innerHTML = `<a class="link" href="${link}" target="_blank">${link}</a>`;
+        };
+    </script>
+ -->

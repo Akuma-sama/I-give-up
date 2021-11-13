@@ -79,7 +79,7 @@ app.get('/:type/:name', limit, async (req, res) => {
 
     //#region handle functions
     function handleResponse(response) {
-        console.log(response)
+        // console.log(response)
         return response.json().then(function (json) {
             return response.ok ? json : Promise.reject(json);
         });
