@@ -46,7 +46,7 @@ Or you can also fill out the following form for data:
                         <br><br><b>
                         <label for="name">Anime/Manga Name:</label>
                         </b><br>
-                        <input type="text" id="name" name="name" placeholder="The Promised Neverland">
+                        <input type="text" id="name" name="name" placeholder="e.g. The Promised Neverland">
                     </div>
                     <br>
                     <button onClick="main()">
@@ -63,11 +63,6 @@ Or you can also fill out the following form for data:
     </section>
 
     <script>
-        const cursor = document.querySelector('.cursor');
-        document.addEventListener('mousemove', e => {
-            cursor.setAttribute("style", "top: "+(e.pageY - 10)+"px; left: "+(e.pageX - 10)+"px;")
-        });
-
         function main () {
             const BASE = 'https://unofficial-anilist-parser.herokuapp.com';
             const typeElement = document.getElementById('type');
