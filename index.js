@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const path = require('path');
+const http2 = require('http2')
 
 const limit = rateLimit({
     windowMs: 1000 * 60 * 30,
@@ -50,29 +51,34 @@ app.get('/', async (req, res) => {
     res.sendFile(path.join(__dirname, '/homepage/index.html'));
 });
 
+
+// The `http2.connect` method creates a new session with example.com
+
 app.get('/:type/:name', limit, async (req, res) => {
     const name = req.params.name;
     const type = req.params.type;
-
+    
     const variables = { // variables for query
         'search': name,
         'type': type.toUpperCase()
     };
-
+    
     const url = 'https://graphql.anilist.co',
-        options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                query: query,
-                variables: variables
-            })
-        };
+    options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: query,
+            variables: variables
+        })
+    };
+    
+    const session = http2.connect(url)
 
-    fetch(url, options)
+    fetch(session, options)
         .then(handleResponse)
         .then(handleData)
         .catch(handleError);
