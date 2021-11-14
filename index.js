@@ -29,7 +29,6 @@ query ($search: String, $type: MediaType) {
 }
 `;
 
-// This is just basic info. When I complete the endpoints, I will make an html/css file for this.
 app.get('/', async (req, res) => {
     // const start = [
     //     'Hello, this is an attempted anilist api. More coming soon',
@@ -49,9 +48,6 @@ app.get('/', async (req, res) => {
 
     res.sendFile(path.join(__dirname, '/homepage/index.html'));
 });
-
-
-// The `http2.connect` method creates a new session with example.com
 
 app.get('/:type/:name', limit, async (req, res) => {
     const name = req.params.name;
