@@ -72,7 +72,8 @@ Or you can also fill out the following form for data:
             const name = nameElement.value;
             // console.log(name);
             let link = `${BASE}/${type}/${name}`;
-            link = link.replaceAll(" ", "%20");
+            link = encodeURI(link);
+            // link = link.replaceAll(" ", "%20");
             // console.log(link);
             document.getElementById('link').innerHTML = `<a class="link" href="${link}" target="_blank">${link}</a>`;
         };
