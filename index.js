@@ -8,7 +8,6 @@ const fetch = require('node-fetch');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const path = require('path');
-const http2 = require('http2')
 
 const limit = rateLimit({
     windowMs: 1000 * 60 * 30,
@@ -75,10 +74,8 @@ app.get('/:type/:name', limit, async (req, res) => {
             variables: variables
         })
     };
-    
-    const session = http2.connect(url)
 
-    fetch(session, options)
+    fetch(url, options)
         .then(handleResponse)
         .then(handleData)
         .catch(handleError);
