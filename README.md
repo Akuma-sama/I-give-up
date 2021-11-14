@@ -15,6 +15,6 @@ Required:
 
 e.g.
 https://unofficial-anilist-parser.herokuapp.com/anime/Black Clover
-https://unofficial-anilist-parser.herokuapp.com/anime/BlackClover
+https://unofficial-anilist-parser.herokuapp.com/manga/BlackClover
 https://unofficial-anilist-parser.herokuapp.com/anime/Black%20Clover
 ```
